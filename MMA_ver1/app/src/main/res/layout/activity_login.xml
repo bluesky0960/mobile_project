@@ -1,23 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/loginbtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="MMA"
+                android:textAlignment="center"
+                android:textSize="50dp" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Membership Management App"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_marginTop="1dp"/>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:hint="아이디"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="#fffffff"
+                android:textColorHint="#ffffff"
+                android:id="@+id/idText"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:layout_marginTop="50dp"
+                android:background="@color/colorPrimary"
+                />
+            <EditText
+                android:inputType="textPassword"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:hint="비밀번호"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="#fffffff"
+                android:textColorHint="#ffffff"
+                android:id="@+id/passwordText"
+                android:drawableStart="@drawable/ic_password_icon_24dp"
+                android:drawableLeft="@drawable/ic_password_icon_24dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                />
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>
