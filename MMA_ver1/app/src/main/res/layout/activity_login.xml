@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
@@ -28,7 +28,7 @@
                 android:text="MMA"
                 android:textAlignment="center"
                 android:textSize="50dp" />
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,11 +41,20 @@
                 android:layout_marginTop="1dp"/>
 
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_signIn_Btn"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="50dp"
+                android:visibility="visible" />
 
             <EditText
                 android:layout_width="280dp"
@@ -53,12 +62,12 @@
                 android:hint="아이디"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:textColor="#fffffff"
+                android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:id="@+id/idText"
                 android:drawableStart="@drawable/ic_person_black_24dp"
                 android:drawableLeft="@drawable/ic_person_black_24dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/colorPrimary"
                 />
             <EditText
@@ -68,7 +77,7 @@
                 android:hint="비밀번호"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:textColor="#fffffff"
+                android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:id="@+id/passwordText"
                 android:drawableStart="@drawable/ic_password_icon_24dp"
@@ -77,8 +86,29 @@
                 android:background="@color/colorPrimary"
                 />
 
+            <Button
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:background="@color/colorPrimaryDark"
+                android:text="로그인"
+                android:id="@+id/loginBtn"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"
+                android:text="회원가입"
+                android:id="@+id/registerBtn"/>
+
         </LinearLayout>
-        
+
     </LinearLayout>
 
 </RelativeLayout>
