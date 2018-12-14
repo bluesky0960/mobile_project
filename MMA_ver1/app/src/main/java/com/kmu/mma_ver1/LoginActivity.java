@@ -2,6 +2,7 @@ package com.kmu.mma_ver1;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +18,17 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kmu.mma_ver1.models.User;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,8 +42,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private static int GOOGLE_LOGIN_OPEN = 100;
 
-    private static final String TAG = "GoogleActivity";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
+    private FirebaseDatabase mDatabase;
+
+    private DatabaseReference userRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +67,26 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
-        // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mDatabase = FirebaseDatabase.getInstance();
+        userRef = mDatabase.getReference("users");
 
     }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_LOGIN_OPEN);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
     }
 
     // [START onactivityresult]
@@ -93,10 +115,37 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
+                            final User user1 = new User(user.getDisplayName(),user.getEmail());
+                            userRef.child(user.getUid()).setValue(user1, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                    if(databaseError == null){
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                        Bundle eventBundle = new Bundle();
+                                        eventBundle.putString("email",user1.getEmail());
+                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN,eventBundle);
+                                    }
+                                }
+                            });
                         } else {
                             Snackbar.make(findViewById(R.id.activity_login), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                });
+    }
+
 }
