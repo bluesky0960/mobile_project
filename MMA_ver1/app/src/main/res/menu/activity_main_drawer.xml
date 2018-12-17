@@ -19,10 +19,4 @@
 
     </group>
 
-    <item
-        android:title="Logout"
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_person_outline_black_24dp"
-        />
-
 </menu>

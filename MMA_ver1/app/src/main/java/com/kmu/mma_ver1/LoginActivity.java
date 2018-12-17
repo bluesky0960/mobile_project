@@ -30,6 +30,8 @@ import com.kmu.mma_ver1.models.User;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+
     private SignInButton mSignInBtn;
 
     // [START declare_auth]
