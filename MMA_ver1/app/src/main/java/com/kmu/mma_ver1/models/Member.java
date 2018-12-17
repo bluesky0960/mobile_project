@@ -1,21 +1,29 @@
 package com.kmu.mma_ver1.models;
 
+import android.widget.EditText;
+
 import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.ArrayList;
 
 @IgnoreExtraProperties
 public class Member {
 
     public String username;
-    public String email;
-    public String userId;
+    public String phone;
+    public ArrayList<String> classList;
+
 
     public Member() {
     }
 
-    public Member(String userId,String username, String email) {
+    public Member(String username, String phone, ArrayList<String> classList) {
         this.username = username;
-        this.email = email;
-        this.userId = userId;
-
+        this.phone = phone;
+        this.classList = classList;
     }
+    public String getPhone(){
+        return phone;
+    }
+
 }

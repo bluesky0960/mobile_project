@@ -35,24 +35,11 @@
 
 
             <EditText
-                android:id="@+id/idId"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"
-                android:drawableStart="@drawable/ic_person_black_24dp"
-                android:hint="아이디"
-                android:padding="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
-
-            <EditText
                 android:id="@+id/idName"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/colorPrimary"
                 android:drawableStart="@drawable/ic_person_black_24dp"
                 android:hint="성명"
@@ -61,14 +48,14 @@
                 android:textColorHint="#ffffff" />
 
             <EditText
-                android:id="@+id/idEmail"
+                android:id="@+id/idPhone"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:background="@color/colorPrimary"
-                android:drawableStart="@drawable/ic_mail_black_24dp"
-                android:hint="이메일"
+                android:drawableStart="@drawable/ic_phone_black_24dp"
+                android:hint="전화번호"
                 android:padding="10dp"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff" />
@@ -81,31 +68,30 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="진도"
                     android:textSize="15dp"
+                    android:drawableRight="@drawable/ic_control_point_black_24dp"
                     android:textAlignment="center"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:id="@+id/classBtn"/>
 
-                <Button
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:background="#ffffff"
-                    android:drawableStart="@drawable/ic_control_point_black_24dp"
-                    android:id="@+id/progressBtn"/>
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                </LinearLayout>
 
             </LinearLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/dynamicArea">
 
-
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
     </LinearLayout>
