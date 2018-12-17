@@ -62,7 +62,23 @@ public class RegisterActivity extends AppCompatActivity {
                 addClass();
             }
         });
+        Button MinusBtn = (Button) findViewById(R.id.minusBtn);
+        MinusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusClass();
+            }
+        });
 
+    }
+
+    private void minusClass(){
+        if(numText <= 0){
+            return;
+        }
+        EditText editText = (EditText)findViewById(CLASS_ID+numText);
+        dynamicLayout.removeView(editText);
+        numText--;
     }
 
     private void addClass(){
