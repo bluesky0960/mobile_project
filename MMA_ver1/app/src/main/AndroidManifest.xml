@@ -24,9 +24,10 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".CurriActivity" />
         <activity android:name=".LicenseActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegLogActivity" />
+        <activity android:name=".LicenseWebView"></activity>
     </application>
 
 </manifest>

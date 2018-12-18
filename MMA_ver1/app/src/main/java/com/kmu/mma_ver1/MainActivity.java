@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +21,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -27,7 +29,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kmu.mma_ver1.adapters.MemberAdapter;
 import com.kmu.mma_ver1.models.Member;
+import com.kmu.mma_ver1.models.User;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -37,24 +43,47 @@ public class MainActivity extends AppCompatActivity
 
     private FirebaseDatabase mDatabase;
 
+    private DatabaseReference userDBRef;
+
     private DatabaseReference userRef;
+
+    private MemberAdapter memberAdapters;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        RecyclerView mainLayout = (RecyclerView) findViewById(R.id.mainContent);
+
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        userRef =  mDatabase.getReference("users").child(user.getUid()).child("member");
-        setContentView(R.layout.activity_main);
+        userRef = mDatabase.getReference("users");
+        userDBRef =  mDatabase.getReference("users").child(user.getUid()).child("member");
+
         TextView userName = (TextView) findViewById(R.id.mainName);
         userName.setText(user.getDisplayName()+"님");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        addMemberListener();
+        memberAdapters = new MemberAdapter();
+        mainLayout.setAdapter(memberAdapters);
+        mainLayout.setLayoutManager(new LinearLayoutManager(this));
+        mainLayout.addOnItemTouchListener(new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Member member = memberAdapters.getItem(position);
+                Intent userIntent = new Intent(MainActivity.this, UserActivity.class);
+                userIntent.putExtra("name",member.getUsername());
+                userIntent.putExtra("phone",member.getPhone());
+                startActivity(userIntent);
+            }
+        }));
 
 
 
@@ -64,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             }
         });
 
@@ -86,11 +115,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void addMemberListner(){
-        userRef.addChildEventListener(new ChildEventListener() {
+    private void addMemberListener(){
+        userDBRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Member member = dataSnapshot.getValue(Member.class);
+                Member memberInfo = dataSnapshot.getValue(Member.class);
+                drawUI(memberInfo);
             }
 
             @Override
@@ -113,6 +143,10 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    private void drawUI(Member member){
+        memberAdapters.addItem(member);
     }
 
     public void toggleSearchBar(){
@@ -161,12 +195,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager manager = getSupportFragmentManager();
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_activity_user) {
-            startActivity(new Intent(MainActivity.this, UserActivity.class));
-        } else if (id == R.id.nav_activity_curri) {
-            startActivity(new Intent(MainActivity.this, CurriActivity.class));
-        } else if (id == R.id.nav_activity_license) {
+        if (id == R.id.nav_activity_license) {
             startActivity(new Intent(MainActivity.this, LicenseActivity.class));
         }
 

@@ -1,11 +1,10 @@
 package com.kmu.mma_ver1;
 
-import android.app.ActionBar;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,7 +25,6 @@ import com.kmu.mma_ver1.models.Member;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import static android.support.v7.widget.AppCompatDrawableManager.get;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -42,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     private final int CLASS_ID = 0;
 
     LinearLayout dynamicLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
                 while(memberIterator.hasNext()){
                     Member member1 = memberIterator.next().getValue(Member.class);
                     if(member1.getPhone().equals(inputPhone)){
-                        Toast.makeText(RegisterActivity.this, "이미 등록된 회원입니다", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -137,8 +135,10 @@ public class RegisterActivity extends AppCompatActivity {
                     edtPhone.setText("");
                     Toast.makeText(RegisterActivity.this, "회원등록이 완료되었습니다", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    finish();
                 }
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -5,14 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_activity_user"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="내 정보" />
-        <item
-            android:id="@+id/nav_activity_curri"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="커리큘럼 관리" />
-        <item
             android:id="@+id/nav_activity_license"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="오픈라이선스" />
